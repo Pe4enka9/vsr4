@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Новогодняя открытка</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+            background: linear-gradient(to bottom, #002f4b, #dc4225);
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .card {
+            width: 400px;
+            height: 600px;
+            perspective: 1000px; /* Добавляем перспективу для эффекта 3D */
+            transform-style: preserve-3d;
+            position: relative;
+            transition: transform 1s; /* Плавный поворот */
+        }
+
+        .card.flipped {
+            transform: rotateY(180deg); /* Поворот при клике */
+        }
+
+        .card .front, .card .back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: #333333; /* Тёмный фон для обеих сторон открытки */
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            backface-visibility: hidden; /* Прячет заднюю сторону, когда она не видна */
+        }
+
+        .card .front {
+            background: #333333; /* Цвет передней стороны открытки */
+        }
+
+        .card .back {
+            background: #444444; /* Цвет задней стороны открытки */
+            transform: rotateY(180deg);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+        }
+
+        .card h1 {
+            font-size: 2.5rem;
+            margin: 20px;
+            color: #dc4225;
+        }
+
+        .snow {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .snowflake {
+            position: absolute;
+            top: -10px;
+            color: #fff;
+            opacity: 0.8;
+            font-size: 1rem;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(0) rotate(0deg);
+            }
+            100% {
+                transform: translateY(600px) rotate(360deg);
+            }
+        }
+
+        .message {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 1.2rem;
+        }
+
+        .btn {
+            margin-top: 20px;
+            background: #dc4225;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            transition: background 0.3s;
+        }
+
+        .btn:hover {
+            background: #a82419;
+        }
+
+        .btn:active {
+            box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Стили для гирлянды */
+        .garland {
+            position: absolute;
+            top: 20px; /* Расположим гирлянду сверху */
+            left: 50%;
+            transform: translateX(-50%) rotate(-30deg); /* Изгибаем гирлянду */
+            display: flex;
+            justify-content: space-between;
+            width: 80%;
+        }
+
+        .garland .string {
+            position: relative;
+            width: 100%;
+            height: 3px; /* Ниточка */
+            background-color: #333;
+            margin-bottom: 20px; /* Отступ от гирлянды */
+        }
+
+        .garland .bulb {
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background-color: #f39c12;
+            animation: blink 1s infinite alternate;
+            position: absolute;
+            top: -8px; /* Расположим лампочку немного выше нити */
+        }
+
+        .garland .bulb:nth-child(1) {
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .garland .bulb:nth-child(2) {
+            left: 30%;
+            animation-delay: 0.3s;
+        }
+
+        .garland .bulb:nth-child(3) {
+            left: 50%;
+            animation-delay: 0.6s;
+        }
+
+        .garland .bulb:nth-child(4) {
+            left: 70%;
+            animation-delay: 0.9s;
+        }
+
+        .garland .bulb:nth-child(5) {
+            left: 90%;
+            animation-delay: 1.2s;
+        }
+
+        @keyframes blink {
+            0% {
+                background-color: #f39c12;
+                opacity: 0.8;
+            }
+            100% {
+                background-color: #e74c3c;
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="card" onclick="flipCard()">
+    <div class="front">
+        <h1>С Новым Годом!</h1>
+        <canvas class="snow"></canvas>
+    </div>
+    <div class="back">
+        <div class="garland">
+            <div class="string"></div> <!-- Ниточка гирлянды -->
+            <div class="bulb"></div>
+            <div class="bulb"></div>
+            <div class="bulb"></div>
+            <div class="bulb"></div>
+            <div class="bulb"></div>
+        </div>
+        <div class="message">Желаем счастья, здоровья и тепла в новом году!</div>
+        <button class="btn" onclick="alert('С Новым Годом! 🎉')">Поздравить</button>
+    </div>
+</div>
+
+<script>
+    const canvas = document.querySelector('.snow');
+    const ctx = canvas.getContext('2d');
+    const snowflakes = [];
+
+    canvas.width = 400;
+    canvas.height = 600;
+
+    function createSnowflake() {
+        return {
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height - canvas.height,
+            radius: Math.random() * 4 + 1,
+            speed: Math.random() * 2 + 1,
+            opacity: Math.random() * 0.5 + 0.3
+        };
+    }
+
+    function drawSnowflake(flake) {
+        ctx.beginPath();
+        ctx.arc(flake.x, flake.y, flake.radius, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255, 255, 255, ${flake.opacity})`;
+        ctx.fill();
+    }
+
+    function updateSnowflake(flake) {
+        flake.y += flake.speed;
+        if (flake.y > canvas.height) {
+            flake.y = -flake.radius;
+            flake.x = Math.random() * canvas.width;
+        }
+    }
+
+    function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        snowflakes.forEach((flake) => {
+            drawSnowflake(flake);
+            updateSnowflake(flake);
+        });
+        requestAnimationFrame(animate);
+    }
+
+    for (let i = 0; i < 100; i++) {
+        snowflakes.push(createSnowflake());
+    }
+
+    animate();
+
+    function flipCard() {
+        const card = document.querySelector('.card');
+        card.classList.toggle('flipped'); // Переворачиваем открытку
+    }
+</script>
+</body>
+</html>
