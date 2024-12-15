@@ -11,39 +11,42 @@
 }
 
 body {
-    margin: 0;
-    overflow: hidden;
-    background: url("https://i.pinimg.com/originals/45/50/00/4550003a61a122f477eca889a76ae121.jpg") center / cover;
     height: 100vh;
+
     display: flex;
     align-items: center;
     justify-content: center;
-    color: white;
+
+    color: #fff;
+    background: url("https://i.pinimg.com/originals/45/50/00/4550003a61a122f477eca889a76ae121.jpg") center / cover;
 }
 
 .card {
     width: 400px;
     height: 600px;
-    perspective: 1000px; /* Добавляем перспективу для эффекта 3D */
+    perspective: 1000px;
 
     transform-style: preserve-3d;
+    transition: transform 1s;
     position: relative;
-    transition: transform 1s; /* Плавный поворот */
 }
 
 .card.flipped {
-    transform: rotateY(180deg); /* Поворот при клике */
+    transform: rotateY(180deg);
 }
 
 .card .front,
 .card .back {
-    position: absolute;
     width: 100%;
     height: 100%;
+
     padding: 20px;
+
     border-radius: 15px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-    backface-visibility: hidden; /* Прячет заднюю сторону, когда она не видна */
+
+    box-shadow: 0 8px 20px rgba(0, 0, 0, .3);
+    backface-visibility: hidden;
+    position: absolute;
 }
 
 .card .front {
@@ -52,14 +55,15 @@ body {
 }
 
 .card .back {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    color: #fff;
     background: linear-gradient(to bottom, rgba(0, 47, 75, .7), rgba(168, 57, 36, .7));
     backdrop-filter: blur(5px);
 
     transform: rotateY(180deg);
-    color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     text-align: center;
     position: relative;
 }
@@ -71,21 +75,24 @@ body {
 }
 
 .snow {
+    width: 100%;
+    height: 100%;
+
+    pointer-events: none;
     position: absolute;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
 }
 
 .snowflake {
+    color: #fff;
+
+    font-size: 1rem;
+
+    opacity: .8;
+    animation: fall linear infinite;
     position: absolute;
     top: -10px;
-    color: #fff;
-    opacity: 0.8;
-    font-size: 1rem;
-    animation: fall linear infinite;
 }
 
 @keyframes fall {
@@ -98,60 +105,70 @@ body {
 }
 
 .message {
+    font-size: 1.2rem;
+
+    transform: translateX(-50%);
     position: absolute;
     bottom: 20px;
     left: 50%;
-    transform: translateX(-50%);
-    font-size: 1.2rem;
 }
 
 .btn {
     margin-top: 20px;
-    background: #dc4225;
-    color: white;
-    border: none;
     padding: 10px 20px;
-    font-size: 1rem;
+
+    color: #fff;
+    background-color: #dc4225;
+
+    border: none;
     border-radius: 5px;
+
+    font-size: 1rem;
+
     cursor: pointer;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-    transition: background 0.3s;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, .2);
+    transition: background .3s;
 }
 
 .btn:hover {
-    background: #a82419;
+    background-color: #a82419;
 }
 
 .btn:active {
-    box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.3);
+    box-shadow: inset 0 3px 5px rgba(0, 0, 0, .3);
 }
 
-/* Стили для гирлянды */
 .garland {
     width: 80%;
 
-    transform: translateX(-50%); /* Изгибаем гирлянду */
+    transform: translateX(-50%);
     position: absolute;
-    top: 20px; /* Расположим гирлянду сверху */
+    top: 20px;
     left: 50%;
 }
 
 .garland .string {
-    position: relative;
     width: 100%;
-    height: 3px; /* Ниточка */
+    height: 3px;
+
+    margin-bottom: 20px;
+
     background-color: #333;
-    margin-bottom: 20px; /* Отступ от гирлянды */
+
+    position: relative;
 }
 
 .garland .bulb {
     width: 15px;
     height: 15px;
-    border-radius: 50%;
+
     background-color: #f39c12;
+
+    border-radius: 50%;
+
     animation: blink 1s infinite alternate;
     position: absolute;
-    top: -6px; /* Расположим лампочку немного выше нити */
+    top: -6px;
     left: 0;
 }
 
@@ -183,7 +200,7 @@ body {
 @keyframes blink {
     0% {
         background-color: #f39c12;
-        opacity: 0.8;
+        opacity: .8;
     }
     100% {
         background-color: #e74c3c;
@@ -201,8 +218,8 @@ body {
 
 #tree {
     width: 220px;
-    display: block;
     margin: 0 auto;
+    display: block;
 }
 
 .st0 {
@@ -227,7 +244,7 @@ body {
 
 .red-md {
     fill: #aa1231;
-    animation: 0.6s red-flash ease-in-out infinite;
+    animation: .6s red-flash ease-in-out infinite;
 }
 
 @keyframes red-flash {
@@ -241,7 +258,7 @@ body {
 
 .gold-lt {
     fill: #c1881c;
-    animation: 0.6s gold-lt-flash ease-in-out infinite;
+    animation: .6s gold-lt-flash ease-in-out infinite;
 }
 
 @keyframes gold-lt-flash {
@@ -269,7 +286,7 @@ body {
 
 .blue-dk {
     fill: #0f1f2f;
-    animation: 0.6s blue-dk-flash ease-in-out infinite;
+    animation: .6s blue-dk-flash ease-in-out infinite;
 }
 
 @keyframes blue-dk-flash {
@@ -283,7 +300,7 @@ body {
 
 .gold-dk {
     fill: #69512a;
-    animation: 0.6s gold-dk-flash ease-in-out infinite;
+    animation: .6s gold-dk-flash ease-in-out infinite;
 }
 
 @keyframes gold-dk-flash {
@@ -295,28 +312,26 @@ body {
     }
 }
 
-.g1 {
-    animation-delay: 0s;
-}
-
 .g2 {
-    animation-delay: 0.4s;
+    animation-delay: .4s;
 }
 
 .g3 {
-    animation-delay: 0.8s;
+    animation-delay: .8s;
 }
 
 .shiny-text {
-    font-size: 50px;
-    font-weight: bold;
-    text-align: center;
+    color: transparent;
     background-image: url('https://img.freepik.com/free-vector/christmas-concept-with-sparkling-background_23-2148354135.jpg?t=st=1734284790~exp=1734288390~hmac=66414108439f03e7331926269f5707d2b90792b8295f91dcaa3259fc63e0f1b7&w=1380'); /* Замените на URL новогодней картинки */
     background-size: cover;
     background-clip: text;
     -webkit-background-clip: text;
-    color: transparent;
+
+    font-size: 50px;
+    font-weight: 700;
+
     animation: shine 8s ease infinite, color-change 6s ease infinite;
+    text-align: center;
 }
 
 @keyframes shine {
