@@ -1,3 +1,17 @@
+window.onload = function () {
+    const audio = document.querySelector('audio');
+
+    audio.play().catch(function (error) {
+        console.log('Ошибка автозапуска: ', error);
+
+        document.body.addEventListener('click', function () {
+            audio.play().catch(function (error) {
+                console.log('Ошибка воспроизведения:', error);
+            });
+        });
+    });
+};
+
 const canvas = document.querySelector('.snow');
 const ctx = canvas.getContext('2d');
 const snowflakes = [];
