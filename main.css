@@ -1,127 +1,189 @@
-body {
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+* {
     margin: 0;
     padding: 0;
-    height: 100vh;
-    background: linear-gradient(to bottom, #007bff, #00bfff);
-    font-family: 'Arial', sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+
+    font-family: "Roboto", serif;
+}
+
+body {
+    margin: 0;
     overflow: hidden;
-    position: relative;
+    background: linear-gradient(to bottom, #002f4b, #dc4225);
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
 }
 
 .card {
-    width: 70%;
-    max-width: 600px;
-    background: #fff;
-    padding: 2rem;
-    border-radius: 15px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    text-align: center;
+    width: 400px;
+    height: 600px;
+    perspective: 1000px; /* Добавляем перспективу для эффекта 3D */
+    transform-style: preserve-3d;
     position: relative;
-    z-index: 1;
-    animation: fadeIn 2s ease-out;
+    transition: transform 1s; /* Плавный поворот */
 }
 
-.snowflakes {
+.card.flipped {
+    transform: rotateY(180deg); /* Поворот при клике */
+}
+
+.card .front,
+.card .back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+    background: #333333; /* Тёмный фон для обеих сторон открытки */
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    backface-visibility: hidden; /* Прячет заднюю сторону, когда она не видна */
+}
+
+.card .front {
+    background: #333333; /* Цвет передней стороны открытки */
+}
+
+.card .back {
+    background: #444444; /* Цвет задней стороны открытки */
+    transform: rotateY(180deg);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    position: relative;
+}
+
+.card h1 {
+    font-size: 2.5rem;
+    color: #dc4225;
+    text-align: center;
+}
+
+.snow {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
     pointer-events: none;
-    z-index: -1;
 }
 
 .snowflake {
     position: absolute;
     top: -10px;
-    font-size: 1.5rem;
     color: #fff;
-    animation: snowfall 8s linear infinite;
+    opacity: 0.8;
+    font-size: 1rem;
+    animation: fall linear infinite;
 }
 
-@keyframes snowfall {
-    0% { top: -10px; opacity: 1; }
-    100% { top: 100vh; opacity: 0; }
-}
-
-@keyframes fadeIn {
-    0% { opacity: 0; }
-    100% { opacity: 1; }
-}
-
-h1 {
-    color: #ff5733;
-    font-size: 3rem;
-    margin-bottom: 1rem;
-    animation: bounce 1s ease infinite;
-}
-
-@keyframes bounce {
-    0% { transform: translateY(0); }
-    25% { transform: translateY(-10px); }
-    50% { transform: translateY(0); }
-    75% { transform: translateY(-10px); }
-    100% { transform: translateY(0); }
-}
-
-p {
-    font-size: 1.2rem;
-    color: #333;
-    margin-bottom: 1.5rem;
-}
-
-.button {
-    background-color: #ff5733;
-    color: white;
-    padding: 1rem 2rem;
-    border: none;
-    border-radius: 50px;
-    font-size: 1.2rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.button:hover {
-    background-color: #c04b2e;
-}
-
-.button:active {
-    transform: scale(0.98);
-}
-
-.fireworks {
-    position: absolute;
-    bottom: 10%;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.firework {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    background-color: #ff5733;
-    box-shadow: 0 0 15px rgba(255, 87, 51, 0.8);
-    animation: fireworkAnim 2s linear infinite;
-}
-
-@keyframes fireworkAnim {
+@keyframes fall {
     0% {
-        transform: scale(0) translateY(0);
-        opacity: 1;
-    }
-    50% {
-        transform: scale(1.5) translateY(-100px);
-        opacity: 0.7;
+        transform: translateY(0) rotate(0deg);
     }
     100% {
-        transform: scale(0) translateY(-200px);
-        opacity: 0;
+        transform: translateY(600px) rotate(360deg);
+    }
+}
+
+.message {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 1.2rem;
+}
+
+.btn {
+    margin-top: 20px;
+    background: #dc4225;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    transition: background 0.3s;
+}
+
+.btn:hover {
+    background: #a82419;
+}
+
+.btn:active {
+    box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.3);
+}
+
+/* Стили для гирлянды */
+.garland {
+    width: 80%;
+
+    transform: translateX(-50%); /* Изгибаем гирлянду */
+    position: absolute;
+    top: 20px; /* Расположим гирлянду сверху */
+    left: 50%;
+}
+
+.garland .string {
+    position: relative;
+    width: 100%;
+    height: 3px; /* Ниточка */
+    background-color: #333;
+    margin-bottom: 20px; /* Отступ от гирлянды */
+}
+
+.garland .bulb {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background-color: #f39c12;
+    animation: blink 1s infinite alternate;
+    position: absolute;
+    top: -6px; /* Расположим лампочку немного выше нити */
+    left: 0;
+}
+
+.garland .bulb:nth-child(2) {
+    left: 20%;
+    animation-delay: .3s;
+}
+
+.garland .bulb:nth-child(3) {
+    left: 40%;
+    animation-delay: .6s;
+}
+
+.garland .bulb:nth-child(4) {
+    left: 60%;
+    animation-delay: .9s;
+}
+
+.garland .bulb:nth-child(5) {
+    left: 80%;
+    animation-delay: 1.2s;
+}
+
+.garland .bulb:nth-child(6) {
+    left: 100%;
+    animation-delay: 1.5s;
+}
+
+@keyframes blink {
+    0% {
+        background-color: #f39c12;
+        opacity: 0.8;
+    }
+    100% {
+        background-color: #e74c3c;
+        opacity: 1;
     }
 }

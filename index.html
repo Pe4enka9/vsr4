@@ -1,25 +1,33 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="main.css">
-    <title>Открытка</title>
+    <title>Новогодняя открытка</title>
 </head>
+
 <body>
 
-<div class="card">
-    <h1>С Новым 2025 годом!</h1>
-    <p>Пусть новый год принесет вам радость, успех и все счастье, которого вы заслуживаете.</p>
-    <button class="button" onclick="showMessage()">Отпраздновать</button>
-</div>
+<div class="card" onclick="flipCard()">
+    <div class="front">
+        <h1>С Новым Годом!</h1>
+        <canvas class="snow"></canvas>
+    </div>
+    <div class="back">
+        <div class="garland">
+            <div class="string"></div>
+            <div class="bulb"></div>
+            <div class="bulb"></div>
+            <div class="bulb"></div>
+            <div class="bulb"></div>
+            <div class="bulb"></div>
+            <div class="bulb"></div>
+        </div>
 
-<div class="snowflakes" id="snowflakes"></div>
-
-<div class="fireworks">
-    <div class="firework"></div>
-    <div class="firework"></div>
-    <div class="firework"></div>
+        <div class="message">Желаем счастья, здоровья и тепла в новом году!</div>
+        <button class="btn" onclick="alert('С Новым Годом! 🎉')">Поздравить</button>
+    </div>
 </div>
 
 <script src="main.js"></script>
